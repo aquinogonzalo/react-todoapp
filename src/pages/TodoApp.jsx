@@ -1,5 +1,6 @@
 import { useState } from "react"
 export const TodoApp = () => {
+  
 
     // Lógica para almacenar los todos
       const [todo, TodoState] = useState("")
@@ -8,8 +9,16 @@ export const TodoApp = () => {
       const addTodoList=()=>{
         setTodoList([...todoList, todo])
       }
+
+      const todoAction = ({key}) =>{
+        if(key === "Enter" && todo !== ""){
+          addTodoList(todo)
+
+        }
+        
+      }
     // Lógica para completar un todo
-  
+
     return (
       <div className="container">
         {/* Header */}
@@ -44,11 +53,8 @@ export const TodoApp = () => {
               }}
               // Evento cuando presiona tecla Enter en ASCII
               onKeyUpCapture={
-                ({key}) =>{
-                  if(key === "Enter" && todo !== ""){
-                    addTodoList(todo)
-                  }
-                }
+                  todoAction
+                  
               }
             />
           </div>
@@ -58,6 +64,11 @@ export const TodoApp = () => {
             <h3>Todo List</h3>
             <ul className="list-unstyled">
               {/* TodoList Item */}
+              {todoList.map((todo, index) => (
+            <li className={'list-group-item'} key={index}>
+              <span>{todo}</span>
+            </li>
+          ))}
             </ul>
           </div>
         </div>
